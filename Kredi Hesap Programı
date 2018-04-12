@@ -1,0 +1,129 @@
+//LOAN-----
+import java.text.NumberFormat;
+import java.util.Scanner;
+
+public class LoanCalculatorProgram {
+	
+
+	 private static double [] computePayment(double loanAmount, double termInYears, double interestRate) {
+		       
+		      // Convert interest rate into a decimal
+		      // eg. 6.5% = 0.065
+		 	  double [] dizi = new double[2]; 
+		 	  
+		      interestRate /= 100.0;
+		       
+		      // Monthly interest rate 
+		      // is the yearly rate divided by 12
+		       
+		      double monthlyRate = interestRate / 12.0;
+		       
+		      // The length of the term in months 
+		      // is the number of years times 12
+		       
+		      double termInMonths = termInYears * 12;
+		       
+		      // Calculate the monthly payment
+		      // Typically this formula is provided so 
+		      // we won't go into the details
+		       
+		      // The Math.pow() method is used calculate values raised to a power
+		       
+		      double monthlyPayment =  (loanAmount*monthlyRate) / 
+		    		  				   (1-Math.pow(1+monthlyRate, -termInMonths));
+		      
+		      double totalPayment=monthlyPayment*termInMonths;
+		       
+		      dizi[0]=monthlyPayment;
+		      dizi[1]=totalPayment;
+		   
+		      return dizi;
+		      
+		   }	
+	 
+	 private static void describeProblem() {
+		 
+		 System.out.println("Problem Statement : Write a loan calculator program that compute "
+		 		+ "both monthly and total payments for a given \n" + 
+		 		"amount, annual interest rate, and loan period.\n" + 
+		 		" ");
+		 
+	 }
+	 private static void displayOutput(double monthlyPayment, double totalPayment) {
+		 
+		    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+		  
+			      
+		 System.out.println("Monthly Payment: "+
+		         currencyFormat.format(monthlyPayment));
+		 
+		 System.out.println("Total Payment: "+
+		         currencyFormat.format(totalPayment));
+		 
+	 }
+	 
+	public static void main(String[] args) {
+		    
+		int loanAmount,termInYears;
+	    double interestRate;
+			
+		    describeProblem();
+		    
+			Loan loan=new Loan();
+		
+		    Scanner scanner = new Scanner(System.in);
+		    
+			  System.out.print("Enter loan amount: ");
+		      loanAmount = scanner.nextInt();
+		      loan.setLoanAmount(loanAmount);
+		       
+		      System.out.print("Enter loan term (in years): ");
+		      termInYears = scanner.nextInt();
+		      loan.setTermInYears(termInYears);
+		       
+		      System.out.print("Enter interest rate: ");
+		      interestRate = scanner.nextDouble();
+		      loan.setInterestRate(interestRate);
+		      
+		     
+ double monthlyPayment=computePayment(loan.getLoanAmount(), loan.getTermInYears(), loan.getTermInYears())[0];
+double totalPayment=computePayment(loan.getLoanAmount(), loan.getTermInYears(), loan.getTermInYears())[1];
+			  displayOutput( monthlyPayment,  totalPayment);
+				      
+			  
+	
+	}
+	
+	
+}
+
+
+//LOANCALCULATOR GET SET:
+
+
+public class Loan {
+	
+	private int loanAmount;
+	private int termInYears;
+	private double interestRate;
+	
+	public void setLoanAmount(int amount) {
+		this.loanAmount=amount;
+	}
+	public int getLoanAmount() {
+		return loanAmount;
+	}
+	public void setTermInYears(int termInYears) {
+		this.termInYears=termInYears;
+	}
+	public double getTermInYears() {
+		return termInYears;
+	}
+	public void setInterestRate(double interestRate) {
+		this.interestRate=interestRate;
+	}
+	public double getInterestRate() {
+		return interestRate;
+	}
+
+}
